@@ -1,9 +1,13 @@
 const grid = document.querySelector('.grid')
 const blockWidth = 100
 const blockHeight = 20
+const boardWidth = 560
 
 const userStart = [230, 10]
 let currentPosition = userStart
+
+const ballStart = [270, 40]
+let ballCurrentPosition = ballStart
 
 class Block {
   constructor(xAxis, yAxis) {
@@ -57,14 +61,24 @@ function drawUser() {
 function moveUser(e) {
   switch (e.key) {
     case 'ArrowLeft':
-      currentPosition[0] -= 10
-      drawUser()
+      if (currentPosition[0] > 0) {
+        currentPosition[0] -= 10
+        drawUser()
+      }
       break
     case 'ArrowRight':
-      currentPosition[0] += 10
-      drawUser()
+      if (currentPosition[0] < boardWidth - blockWidth) {
+        currentPosition[0] += 10
+        drawUser()
+      }
       break
   }
 }
+
+const ball = document.createElement('div')
+ball.classList.add('ball')
+ball.style.left = ballCurrentPosition[0] + 'px'
+ball.style.bottom = ballCurrentPosition[1] + 'px'
+grid.appendChild(ball)
 
 document.addEventListener('keydown', moveUser)
